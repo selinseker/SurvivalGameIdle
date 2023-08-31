@@ -1,31 +1,56 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class PlayerTop : MonoBehaviour
 {
-    private float MoveSpeed = 5f;
+    public float MoveSpeed = 2f;
     private Rigidbody rb;
+
+    Animator playerAnimator;
+
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        playerAnimator = GetComponent<Animator>();
     }
 
     
     void Update()
     {
-        
+
+      
     }
 
     private void FixedUpdate()
     {
-        float HorizontalInput = Input.GetAxis("Horizontal");
-        float VerticalInput = Input.GetAxis("Vertical");
+        float horizontalInput = Input.GetAxis("Horizontal");
+        float verticalInput = Input.GetAxis("Vertical");
 
-        Vector3 Movement = new Vector3(-HorizontalInput, 0f, -VerticalInput);
-        rb.velocity = Movement * MoveSpeed;
+        Vector3 movement = new Vector3(-horizontalInput, 0.0f, -verticalInput);
+
+        rb.velocity = movement;
+
+        if (movement != Vector3.zero)
+        {
+            
+            Quaternion newRotation = Quaternion.LookRotation(movement);
+            transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, 0.15f);
+
+           
+            playerAnimator.SetBool("PlayerSpeed", true);
+        }
+        else
+        {
+            playerAnimator.SetBool("PlayerSpeed", false);
+        }
+
+       
+        transform.Translate(movement, Space.World);
+
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -35,6 +60,9 @@ public class PlayerTop : MonoBehaviour
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
         }
+        
     }
+
+
 
 }
