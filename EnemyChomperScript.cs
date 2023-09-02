@@ -10,6 +10,9 @@ public class EnemyChomperScript : MonoBehaviour
 
     Transform player;
 
+    public float health;
+    public float damage;
+
 
     void Start()
     {
@@ -30,6 +33,7 @@ public class EnemyChomperScript : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             ChomperAnim.SetBool("NearChomper", true);
+            player.GetComponent<PlayerEllenManager>().GetDamage(damage);
         }
     }
 
@@ -40,6 +44,8 @@ public class EnemyChomperScript : MonoBehaviour
             ChomperAnim.SetBool("NearChomper", false);
         }
     }
+
+
 }
 
 
