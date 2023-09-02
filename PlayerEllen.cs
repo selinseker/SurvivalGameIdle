@@ -8,6 +8,7 @@ public class PlayerTop : MonoBehaviour
 {
     private float MoveSpeed = 11f;
     private Rigidbody rb;
+    public float damage =10f;
 
     Animator playerAnimator;
 
@@ -22,7 +23,7 @@ public class PlayerTop : MonoBehaviour
     void Update()
     {
 
-      
+        
     }
 
     private void FixedUpdate()
@@ -54,11 +55,10 @@ public class PlayerTop : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Mermi"))
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            gameObject.GetComponent<PlayerEllenManager>().GetDamage(damage);
         }
-        
+
     }
 
 }
-
