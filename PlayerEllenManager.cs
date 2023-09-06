@@ -11,6 +11,10 @@ public class PlayerEllenManager : MonoBehaviour
     public float TotalCoin;
     public float coinValue;
 
+    Quaternion rotation = Quaternion.Euler(0f, 180f, 0f);
+
+    public Transform floatingText;
+
     bool dead = false;
 
     public Slider slider;
@@ -61,10 +65,10 @@ public class PlayerEllenManager : MonoBehaviour
        
         if (other.gameObject.CompareTag("Coin"))
         {
+            Instantiate(floatingText, transform.position, rotation).GetComponent<TextMesh>().text = "+" + coinValue.ToString();
             TotalCoin += coinValue;
         }
         sliderCoin.value = TotalCoin;
     }
-
 
 }
