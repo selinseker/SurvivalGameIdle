@@ -6,42 +6,40 @@ using UnityEngine.SceneManagement;
 
 public class PlayerTop : MonoBehaviour
 {
-    private float MoveSpeed = 11f;
+    public float ileriHiz =11.0f; 
+    public float yanHiz = 9.0f;   
+    
     private Rigidbody rb;
-    public float damage =10f;
+    public float damage = 10f;
 
     Animator playerAnimator;
 
+    
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         playerAnimator = GetComponent<Animator>();
+
+       
     }
 
-    
+
     void Update()
     {
-
         
     }
 
     private void FixedUpdate()
     {
         float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
 
-        Vector3 movement = new Vector3(-horizontalInput, 0.0f, -verticalInput).normalized * MoveSpeed;
+        Vector3 movement = new Vector3(-horizontalInput * yanHiz, 0.0f, -ileriHiz);
 
         rb.velocity = movement;
 
-        if (movement != Vector3.zero)
+        if ( movement!= Vector3.zero)
         {
-            
-            Quaternion newRotation = Quaternion.LookRotation(movement);
-            transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, 0.15f);
-
-           
             playerAnimator.SetBool("PlayerSpeed", true);
         }
         else
