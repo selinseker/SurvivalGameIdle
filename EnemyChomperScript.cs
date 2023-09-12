@@ -13,6 +13,8 @@ public class EnemyChomperScript : MonoBehaviour
     public float health;
     public float damage;
 
+    public float shiftDistance = 1.0f;
+    public float delayBeforeShift = 0.2f;
 
     void Start()
     {
@@ -23,9 +25,11 @@ public class EnemyChomperScript : MonoBehaviour
 
     void Update()
     {
+        
         Vector3 direction = player.position - transform.position;
         Quaternion lookRotation = Quaternion.LookRotation(direction);
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
+        
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -34,6 +38,7 @@ public class EnemyChomperScript : MonoBehaviour
         {
             ChomperAnim.SetBool("NearChomper", true);
             player.GetComponent<PlayerEllenManager>().GetDamage(damage);
+            Invoke("ShiftRight", delayBeforeShift);
         }
     }
 
@@ -45,6 +50,14 @@ public class EnemyChomperScript : MonoBehaviour
         }
     }
 
+
+    private void ShiftRight()
+    {
+        Vector3 newPosition = transform.position + new Vector3(-shiftDistance, 0f, 0f);
+        transform.position = newPosition;
+    }
+
+}
 
 }
 
